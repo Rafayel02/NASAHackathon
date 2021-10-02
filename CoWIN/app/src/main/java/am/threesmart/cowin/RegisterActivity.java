@@ -40,8 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (userByUsername == null) {
                         UserFileManager.addUser(new User(username.getText().toString(), password.getText().toString()));
                         System.out.println("All is ok");
-                        AuthFileManager.setAuthenticated();
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, QuestionAnswerActivity.class);
                         startActivity(intent);
                         finish();
                     } else {

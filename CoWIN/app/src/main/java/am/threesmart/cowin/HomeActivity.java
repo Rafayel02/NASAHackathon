@@ -13,7 +13,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         //Initialize fragment
         Fragment fragment = new MapFragment();
 
@@ -22,5 +21,6 @@ public class HomeActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.frame_layout,fragment)
                 .commit();
+        AuthFileManager.removeAuthentication();
     }
 }

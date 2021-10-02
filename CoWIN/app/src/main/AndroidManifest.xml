@@ -19,6 +19,9 @@
             android:value="AIzaSyDEWJy9X1_fqJR3CtFvivj5iOGeB6JCCJg"/>
 
         <activity
+            android:name=".QuestionAnswerActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
