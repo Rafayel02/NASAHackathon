@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.IOException;
+
 import am.threesmart.cowin.database.Storage;
+import am.threesmart.cowin.database.filemanager.UserFileManager;
 import am.threesmart.cowin.utils.Checker;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            UserFileManager.createFileIfNotExists(getApplicationContext());
+        } catch (IOException e) {
+            System.out.println("aaaaaaaa");
+            e.printStackTrace();
+        }
 
         //Init objects
         username = findViewById(R.id.username);
