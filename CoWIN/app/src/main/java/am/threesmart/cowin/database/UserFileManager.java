@@ -16,25 +16,27 @@ import am.threesmart.cowin.user.User;
 
 public class UserFileManager {
 
-    private static File file = null;
+    private static File usersFile = null;
 
     public static File createFileIfNotExists(Context context) throws IOException {
         File dir = context.getCacheDir();
         File file = new File(dir.toString() + "users.txt");
         if (!file.exists()) {
             file.createNewFile();
+            usersFile = file;
             addUser(new User("test", "test"));
         }
+        usersFile = file;
         return file;
     }
 
     public static boolean addUser(User user) {
         List<User> allUsers = getAllUsers();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
             for (User currUser : allUsers) {
-                writer.write(currUser.getUsername() + " " + currUser.getPassword());
+                writer.write(currUser.getUsername() + " " + currUser.getPassword() + "\n");
             }
-            writer.write(user.getUsername() + " " + user.getPassword());
+            writer.write(user.getUsername() + " " + user.getPassword() + "\n");
             System.out.println("Wrote user into file!");
             return true;
         } catch (IOException e) {
@@ -44,12 +46,9 @@ public class UserFileManager {
         return false;
     }
 
-    public static boolean doesUserExist(String username, String password) {
+    public static boolean doesUserExist(String username) {
         User user = getUserByUsername(username);
-        if(user == null) {
-            return false;
-        }
-        return user.getPassword().equals(password);
+        return user != null;
     }
 
     public static User getUserByUsername(String username) {
@@ -64,7 +63,7 @@ public class UserFileManager {
 
     public static List<User> getAllUsers() {
         final List<User> users = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
             String line = reader.readLine();
             while (line != null) {
                 users.add(
@@ -73,7 +72,6 @@ public class UserFileManager {
                                 line.split(" ")[1]
                         )
                 );
-
                 line = reader.readLine();
             }
         } catch (IOException e) {

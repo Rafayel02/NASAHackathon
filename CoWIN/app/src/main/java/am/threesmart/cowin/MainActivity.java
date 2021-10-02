@@ -10,8 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import am.threesmart.cowin.database.UserFileManager;
+import am.threesmart.cowin.user.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        for (User allUser : UserFileManager.getAllUsers()) {
+            System.out.println("iiiiiiiiiiiiiiiiiiiiiiii" + allUser);
+        }
+
         //Init objects
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -40,12 +46,15 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserFileManager.doesUserExist(username.getText().toString(), password.getText().toString())) {
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    intent.putExtra("username", username.getText().toString());
-                    startActivity(intent);
-                    finish();
-                    return;
+                User userByUsername = UserFileManager.getUserByUsername(username.getText().toString());
+                if (userByUsername != null) {
+                    if (Objects.equals(userByUsername.getPassword(), password.getText().toString())) {
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        intent.putExtra("username", username.getText().toString());
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
                 }
                 Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
             }
@@ -55,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
 
