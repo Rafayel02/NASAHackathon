@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 
-import am.threesmart.cowin.database.Storage;
-import am.threesmart.cowin.database.filemanager.UserFileManager;
+import am.threesmart.cowin.database.UserFileManager;
 import am.threesmart.cowin.utils.Checker;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             UserFileManager.createFileIfNotExists(getApplicationContext());
+            System.out.println("File exists!");
         } catch (IOException e) {
-            System.out.println("aaaaaaaa");
+            System.out.println("File error!");
             e.printStackTrace();
         }
 
@@ -39,16 +40,14 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(Checker.isUsernameValid(username.getText().toString()));
-                System.out.println(Checker.isUsernameValid(password.getText().toString()));
-                System.out.println(Storage.getAllUsers().size());
-                if (Checker.isUsernameValid(username.getText().toString()) &&
-                        Checker.isPasswordValid(password.getText().toString())) {
+                if (UserFileManager.doesUserExists(username.getText().toString(), password.getText().toString())) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     intent.putExtra("username", username.getText().toString());
                     startActivity(intent);
                     finish();
+                    return;
                 }
+                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
 
