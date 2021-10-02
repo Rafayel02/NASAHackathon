@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-import am.threesmart.cowin.database.UserFileManager;
+import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.UserFileManager;
 import am.threesmart.cowin.user.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (userByUsername == null) {
                         UserFileManager.addUser(new User(username.getText().toString(), password.getText().toString()));
                         System.out.println("All is ok");
+                        AuthFileManager.setAuthenticated();
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

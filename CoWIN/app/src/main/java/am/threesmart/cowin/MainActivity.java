@@ -12,7 +12,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.Objects;
 
-import am.threesmart.cowin.database.UserFileManager;
+import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.UserFileManager;
 import am.threesmart.cowin.user.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,18 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            UserFileManager.createFileIfNotExists(getApplicationContext());
-            System.out.println("File exists!");
-        } catch (IOException e) {
-            System.out.println("File error!");
-            e.printStackTrace();
-        }
-
-        for (User allUser : UserFileManager.getAllUsers()) {
-            System.out.println("iiiiiiiiiiiiiiiiiiiiiiii" + allUser);
-        }
-
         //Init objects
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -49,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 User userByUsername = UserFileManager.getUserByUsername(username.getText().toString());
                 if (userByUsername != null) {
                     if (Objects.equals(userByUsername.getPassword(), password.getText().toString())) {
+                        AuthFileManager.setAuthenticated();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra("username", username.getText().toString());
                         startActivity(intent);
