@@ -44,14 +44,13 @@ public class UserFileManager {
         return false;
     }
 
-    public static boolean doesUserExists(String username, String password) {
+    public static boolean doesUserExist(String username, String password) {
         User user = getUserByUsername(username);
         if(user == null) {
             return false;
         }
         return user.getPassword().equals(password);
     }
-
 
     public static User getUserByUsername(String username) {
         List<User> allUsers = getAllUsers();

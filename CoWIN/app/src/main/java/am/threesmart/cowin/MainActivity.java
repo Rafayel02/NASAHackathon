@@ -12,13 +12,13 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import am.threesmart.cowin.database.UserFileManager;
-import am.threesmart.cowin.utils.Checker;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText password;
     private Button loginButton;
+    private Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserFileManager.doesUserExists(username.getText().toString(), password.getText().toString())) {
+                if (UserFileManager.doesUserExist(username.getText().toString(), password.getText().toString())) {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     intent.putExtra("username", username.getText().toString());
                     startActivity(intent);
@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        registerButton = findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
             }
         });
 
