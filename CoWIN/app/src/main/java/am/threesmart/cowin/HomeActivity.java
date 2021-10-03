@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         resources = getApplicationContext().getResources();
 
         try {
-            inputStream = getResources().getAssets().open("yerevan_data.json");
+            inputStream = getResources().getAssets().open("yerevan_big_data.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         List<WeightedLatLng> list = new ArrayList<>();
 
         JSONObject parser = new JSONObject(sb.toString());
-        for (int i = 0; i <= 1749; i++) {
+        for (int i = 0; i <= 43999; i++) {
             JSONObject jsonObject = parser.getJSONObject(String.valueOf(i));
 
             if(jsonObject.getDouble("w") > 0) {
@@ -125,8 +125,6 @@ public class HomeActivity extends AppCompatActivity {
                 );
             }
         }
-
-        map.addMarker(new MarkerOptions().position(new LatLng(40.140718, 44.585032)));
 
         HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
                 .weightedData(list)
