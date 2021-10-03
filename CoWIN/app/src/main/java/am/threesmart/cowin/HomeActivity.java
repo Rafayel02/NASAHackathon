@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-      profileImageView = findViewById(R.id.profile_image_view);
+        profileImageView = findViewById(R.id.profile_image_view);
 
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         for (int i = 0; i <= 43999; i++) {
             JSONObject jsonObject = parser.getJSONObject(String.valueOf(i));
 
-            if(jsonObject.getDouble("w") > 0) {
+            if (jsonObject.getDouble("w") > 0) {
                 list.add(
                         new WeightedLatLng(
                                 new LatLng(

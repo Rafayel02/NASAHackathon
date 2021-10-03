@@ -17,17 +17,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
 import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.InformationFileManager;
 import am.threesmart.cowin.user.UserInfo;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
-    public static UserInfo userInfo;
+    public static UserInfo userInfo = null;
     private Button confirmButton;
     private Button maleButton;
     private Button femaleButton;
@@ -60,11 +62,11 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         spinnerForEthnicity = findViewById(R.id.spinner1);
         //create a list of items for the spinner.
         String[] ethnicities = new String[]{
-                "Hispanic/Latino","American Indian / Alaska Native Non-Hispanic","Asian Non-Hispanic","Black Non-Hispanic","Native Hawaiian / Other Pacific Islander Non-Hispanic","White Non-Hispanic","Multiple/Other Non-Hispanic"};
+                "Hispanic/Latino", "American Indian / Alaska Native Non-Hispanic", "Asian Non-Hispanic", "Black Non-Hispanic", "Native Hawaiian / Other Pacific Islander Non-Hispanic", "White Non-Hispanic", "Multiple/Other Non-Hispanic"};
 
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
-        CustomDropDownAdapter customAdapter = new CustomDropDownAdapter(getApplicationContext(),ethnicities);
+        CustomDropDownAdapter customAdapter = new CustomDropDownAdapter(getApplicationContext(), ethnicities);
         //set the spinners adapter to the previously created one.
         spinnerForEthnicity.setAdapter(customAdapter);
 
@@ -90,7 +92,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
 
-                        if(b){
+                        if (b) {
 
                             // When checkbox selected
                             //Add position in disease list
@@ -98,8 +100,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                             //Sort disease list
                             Collections.sort(diseasesList);
 
-                        }
-                        else{
+                        } else {
                             //When checkbox unselected
                             //Remove position from disease list
                             diseasesList.remove(i);
@@ -113,19 +114,19 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Initialize String builder
                         StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < diseasesList.size(); j++){
+                        for (int j = 0; j < diseasesList.size(); j++) {
                             //Concat array value
                             stringBuilder.append(diseasesArray[diseasesList.get(j)]);
                             //check condition
-                            if(j != diseasesList.size()-1){
+                            if (j != diseasesList.size() - 1) {
                                 // Add comma
                                 stringBuilder.append(", ");
                             }
                         }
                         String diseases = stringBuilder.toString();
 
-                        if(stringBuilder.length() > 30){
-                            diseases = stringBuilder.substring(0,28) + "...";
+                        if (stringBuilder.length() > 30) {
+                            diseases = stringBuilder.substring(0, 28) + "...";
                         }
                         //Set text on text view
                         chooseDiseasesTextView.setText(diseases);
@@ -143,7 +144,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        for(int j = 0 ; j < selectedDiseases.length; j++){
+                        for (int j = 0; j < selectedDiseases.length; j++) {
                             // Remove all Selection
                             selectedDiseases[j] = false;
                             //Clear diseases list
@@ -162,14 +163,13 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
         spinnerForEthnicity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
 
-                if(spinnerForEthnicity.getSelectedItem() != null) {
+                if (spinnerForEthnicity.getSelectedItem() != null) {
                     selected_val = spinnerForEthnicity.getSelectedItem().toString();
-                    Toast.makeText(getApplicationContext(), selected_val ,
+                    Toast.makeText(getApplicationContext(), selected_val,
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 
                 }
 
@@ -183,17 +183,15 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         });
 
 
-
-
         maleButton = findViewById(R.id.button);
         femaleButton = findViewById(R.id.button2);
 
         maleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_male_button_selected));
+                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this, R.drawable.ic_asset_male_button_selected));
                 maleButton.setTextColor(getResources().getColor(R.color.black));
-                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_female_button));
+                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this, R.drawable.ic_asset_female_button));
                 femaleButton.setTextColor(getResources().getColor(R.color.white));
                 biologicalSex = "male";
 
@@ -202,9 +200,9 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         femaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_female_button_selected));
+                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this, R.drawable.ic_asset_female_button_selected));
                 femaleButton.setTextColor(getResources().getColor(R.color.black));
-                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_male_button));
+                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this, R.drawable.ic_asset_male_button));
                 maleButton.setTextColor(getResources().getColor(R.color.white));
                 biologicalSex = "female";
             }
@@ -215,13 +213,13 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isAllRequiredFieldsEntered()){
+                if (isAllRequiredFieldsEntered()) {
                     AuthFileManager.setAuthenticated();
+
                     Intent intent = new Intent(QuestionAnswerActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(
                             QuestionAnswerActivity.this
                     );
@@ -247,50 +245,59 @@ public class QuestionAnswerActivity extends AppCompatActivity {
 
     }
 
-    private boolean isAllRequiredFieldsEntered(){
+    private boolean isAllRequiredFieldsEntered() {
         String fullName;
         short age;
         String biologicalSexTemp = null;
         String ethnicity;
         ArrayList<String> chronicDiseases = new ArrayList();
 
-        if(fullNameTextView.getText().toString().equals(null) || fullNameTextView.getText().toString().equals("")){
+        if (fullNameTextView.getText().toString().equals(null) || fullNameTextView.getText().toString().equals("")) {
             return false;
-        }
-        else{
+        } else {
             fullName = fullNameTextView.getText().toString();
         }
-        if(ageTextView.getText().toString().equals(null) || ageTextView.getText().toString().equals("")){
+        if (ageTextView.getText().toString().equals(null) || ageTextView.getText().toString().equals("")) {
             return false;
-        }
-        else{
+        } else {
             age = Short.valueOf(ageTextView.getText().toString());
         }
-        if(Objects.equals(biologicalSex,null)){
+        if (Objects.equals(biologicalSex, null)) {
             return false;
-        }
-        else{
+        } else {
             biologicalSexTemp = biologicalSex;
         }
-        if(selected_val == null){
+        if (selected_val == null) {
             return false;
-        }
-        else{
+        } else {
             ethnicity = selected_val;
 
         }
-        if(diseasesList.size() == 0){
+        if (diseasesList.size() == 0) {
             return false;
-        }
-        else{
-            for (int j = 0; j < diseasesList.size(); j++){
+        } else {
+            for (int j = 0; j < diseasesList.size(); j++) {
                 chronicDiseases.add(diseasesArray[diseasesList.get(j)]);
             }
         }
 
+        try {
+            InformationFileManager.clearAll();
+            InformationFileManager.addFieldAndValue("FullName", fullName);
+            InformationFileManager.addFieldAndValue("Age", String.valueOf(age));
+            InformationFileManager.addFieldAndValue("Sex", biologicalSexTemp);
+            InformationFileManager.addFieldAndValue("Ethnicity", ethnicity);
+            StringBuilder chronicDiseasesString = new StringBuilder();
+            for (String chronicDisease : chronicDiseases) {
+                chronicDiseasesString.append(chronicDisease).append(" ");
+            }
+            InformationFileManager.addFieldAndValue("ChronicDiseases", chronicDiseasesString.toString());
 
-        userInfo = new UserInfo(fullName,age,biologicalSexTemp,ethnicity,chronicDiseases);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        userInfo = new UserInfo(fullName, age, biologicalSexTemp, ethnicity, chronicDiseases);
 
         return true;
     }

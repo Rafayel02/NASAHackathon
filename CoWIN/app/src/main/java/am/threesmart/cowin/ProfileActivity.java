@@ -8,9 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.InformationFileManager;
 import am.threesmart.cowin.user.UserInfo;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -35,6 +40,24 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         userInfo = QuestionAnswerActivity.userInfo;
+        if(userInfo == null) {
+            try {
+                String chronicDiseases = InformationFileManager.getValueByField("ChronicDiseases");
+                String[] s = chronicDiseases.split(" ");
+
+                ArrayList<String> chronicDiseasesList = new ArrayList<>(Arrays.asList(s));
+
+                userInfo = new UserInfo(
+                        InformationFileManager.getValueByField("FullName"),
+                        Short.parseShort(InformationFileManager.getValueByField("Age")),
+                        InformationFileManager.getValueByField("Sex"),
+                        InformationFileManager.getValueByField("Ethnicity"),
+                        chronicDiseasesList
+                        );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

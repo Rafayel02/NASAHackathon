@@ -28,6 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 try {
                     UserFileManager.createFileIfNotExists(getApplicationContext());
                     AuthFileManager.createFileIfNotExists(getApplicationContext());
+                    InformationFileManager.createFileIfNotExists(getApplicationContext());
                     if (AuthFileManager.isAuthenticated()) {
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     } else {
