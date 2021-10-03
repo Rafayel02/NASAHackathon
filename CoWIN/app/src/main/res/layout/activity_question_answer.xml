@@ -210,23 +210,26 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="Choose your Chronic Diseases"
+            android:text="Chronic Diseases"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/chooseYourDiseases"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:layout_below="@+id/textView6"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="2dp"
             android:background="@drawable/ic_asset_11"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
             android:spinnerMode="dropdown"
+            android:text="Choose your Chronic Diseases..."
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </RelativeLayout>
