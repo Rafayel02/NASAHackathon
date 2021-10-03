@@ -2,15 +2,18 @@ package am.threesmart.cowin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
@@ -27,6 +30,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import am.threesmart.cowin.filemanager.InformationFileManager;
 import am.threesmart.cowin.requestmanager.weather.JsonFinder;
 import am.threesmart.cowin.requestmanager.weather.WeatherInfoKeeper;
 
@@ -36,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private static Resources resources;
     private static InputStream inputStream;
     private ImageView profileImageView;
+    public static SeekBar seekBar;
 
     private static JsonFinder finder;
     private static WeatherInfoKeeper weather;
@@ -46,23 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         //Initialize fragment
         MapFragment fragment = new MapFragment();
-
-//        try {
-//            InformationFileManager.createFileIfNotExists(getApplicationContext());
-//
-//            System.out.println("*************************************************************");
-//            InformationFileManager.readAllFile();
-//            System.out.println("*************************************************************");
-//
-//            InformationFileManager.addFieldAndValue("a", "b");
-//            System.out.println("*************************************************************");
-//
-//            InformationFileManager.readAllFile();
-//            System.out.println("*************************************************************");
-//        } catch (IOException e) {
-//            System.out.println("exavch");
-//            e.printStackTrace();
-//        }
 
         //Open fragment
         getSupportFragmentManager()
@@ -78,8 +66,11 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        profileImageView = findViewById(R.id.profile_image_view);
+        seekBar = findViewById(R.id.seekBar2);
 
+//        seekBar.setProgress(3);
+//        seekBar.setEnabled(false);
+        profileImageView = findViewById(R.id.profile_image_view);
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("PotentialBehaviorOverride")
     public static void onMapReady(final GoogleMap map) {
         finder = new JsonFinder();
         weather = new WeatherInfoKeeper();

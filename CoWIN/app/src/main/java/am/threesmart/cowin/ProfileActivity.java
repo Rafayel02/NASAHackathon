@@ -146,6 +146,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         risk = 0.95 * ((0.2775 / 14.8) * ageRatio + (0.0525 / 2.8) * sexRatio + (0.67 / 35.7) * diseaseRatio) + 0.05 * ethnicityRatio;
 
+        try {
+            InformationFileManager.addFieldAndValue("risk", String.valueOf(risk));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HomeActivity.seekBar.setMax(4);
+        HomeActivity.seekBar.setProgress((int) Math.round(risk * 4));
+        HomeActivity.seekBar.setEnabled(false);
+
         int riskInInt = (int) Math.round(risk * 4);
         String riskInString = "";
         switch (riskInInt) {
