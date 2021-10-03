@@ -27,12 +27,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import am.threesmart.cowin.requestmanager.weather.JsonFinder;
+import am.threesmart.cowin.requestmanager.weather.WeatherInfoKeeper;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static BitmapDescriptor bitmapDescriptor;
     private static Resources resources;
     private static InputStream inputStream;
     private ImageView profileImageView;
+
+    private static JsonFinder finder;
+    private static WeatherInfoKeeper weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +91,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public static void onMapReady(final GoogleMap map) {
+        finder = new JsonFinder();
+        weather = new WeatherInfoKeeper();
         try {
             readJsonAndDraw(map);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void readJsonAndDraw(GoogleMap map) throws JSONException {
