@@ -19,7 +19,7 @@ public class UserFileManager {
 
     public static File createFileIfNotExists(Context context) throws IOException {
         File dir = context.getCacheDir();
-        File file = new File(dir.toString() + "users.txt");
+        File file = new File(dir.toString() + "/users.txt");
         if (!file.exists()) {
             file.createNewFile();
             usersFile = file;
