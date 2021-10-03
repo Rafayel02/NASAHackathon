@@ -2,6 +2,7 @@ package am.threesmart.cowin;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import am.threesmart.cowin.filemanager.AuthFileManager;
 public class QuestionAnswerActivity extends AppCompatActivity {
 
     private Button confirmButton;
+    private Button maleButton;
+    private Button femaleButton;
     private TextView chooseDiseasesTextView;
     boolean[] selectedDiseases;
     ArrayList<Integer> diseasesList = new ArrayList<>();
@@ -123,8 +126,8 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                         }
                         String diseases = stringBuilder.toString();
 
-                        if(stringBuilder.length() > 15){
-                            diseases = stringBuilder.substring(0,13) + "...";
+                        if(stringBuilder.length() > 30){
+                            diseases = stringBuilder.substring(0,28) + "...";
                         }
                         //Set text on text view
                         chooseDiseasesTextView.setText(diseases);
@@ -160,15 +163,68 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         });
 
 
+        maleButton = findViewById(R.id.button);
+        femaleButton = findViewById(R.id.button2);
+
+        maleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_male_button_selected));
+                maleButton.setTextColor(getResources().getColor(R.color.black));
+                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_female_button));
+                femaleButton.setTextColor(getResources().getColor(R.color.white));
+
+            }
+        });
+        femaleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_female_button_selected));
+                femaleButton.setTextColor(getResources().getColor(R.color.black));
+                maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_male_button));
+                maleButton.setTextColor(getResources().getColor(R.color.white));
+
+            }
+        });
+
+
         confirmButton = findViewById(R.id.confirm_button);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AuthFileManager.setAuthenticated();
-                Intent intent = new Intent(QuestionAnswerActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                if(isAllRequiredFieldsEntered()){
+                    AuthFileManager.setAuthenticated();
+                    Intent intent = new Intent(QuestionAnswerActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            QuestionAnswerActivity.this
+                    );
+                    //Set title
+                    builder.setTitle("You Must Enter All Required Fields");
+
+                    // Set dialog non cancelable
+                    builder.setCancelable(false);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    builder.show();
+                }
+
             }
         });
+
+
+    }
+
+    private boolean isAllRequiredFieldsEntered(){
+        return false;
     }
 }
