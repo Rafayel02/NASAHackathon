@@ -10,6 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.InformationFileManager;
 import am.threesmart.cowin.filemanager.UserFileManager;
 import am.threesmart.cowin.user.User;
 
@@ -27,7 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 try {
                     UserFileManager.createFileIfNotExists(getApplicationContext());
                     AuthFileManager.createFileIfNotExists(getApplicationContext());
-                    if (AuthFileManager.isAuthentication()) {
+                    if (AuthFileManager.isAuthenticated()) {
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     } else {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));

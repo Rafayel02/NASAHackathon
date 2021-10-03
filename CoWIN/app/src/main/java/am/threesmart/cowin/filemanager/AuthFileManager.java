@@ -18,7 +18,7 @@ public class AuthFileManager {
 
     public static File createFileIfNotExists(Context context) throws IOException {
         File dir = context.getCacheDir();
-        File file = new File(dir.toString() + "auth.txt");
+        File file = new File(dir.toString() + "/auth.txt");
         if (!file.exists()) {
             file.createNewFile();
             authFile = file;
@@ -35,14 +35,13 @@ public class AuthFileManager {
         writeBoolInFile(false);
     }
 
-    public static boolean isAuthentication() {
+    public static boolean isAuthenticated() {
         boolean bool = false;
         try(BufferedReader reader = new BufferedReader(new FileReader(authFile))) {
             String line = reader.readLine();
-            if(line == null) {
-                return false;
+            if(line != null) {
+                bool = Boolean.parseBoolean(line);
             }
-            bool = Boolean.parseBoolean(line);
         } catch (IOException e) {
             e.printStackTrace();
         }

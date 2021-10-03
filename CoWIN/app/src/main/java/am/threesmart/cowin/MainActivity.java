@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.filemanager.InformationFileManager;
 import am.threesmart.cowin.filemanager.UserFileManager;
 import am.threesmart.cowin.user.User;
 
