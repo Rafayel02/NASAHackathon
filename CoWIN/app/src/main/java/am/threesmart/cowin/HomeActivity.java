@@ -2,8 +2,11 @@ package am.threesmart.cowin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -29,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     private static BitmapDescriptor bitmapDescriptor;
     private static Resources resources;
     private static InputStream inputStream;
+    private ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,16 @@ public class HomeActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+      profileImageView = findViewById(R.id.profile_image_view);
+
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -119,7 +133,6 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
 
         TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
-
     }
 
 
