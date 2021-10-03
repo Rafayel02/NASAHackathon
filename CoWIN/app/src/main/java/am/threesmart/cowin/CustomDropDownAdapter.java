@@ -26,8 +26,9 @@ public class CustomDropDownAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return countryNames[i];
     }
+
 
     @Override
     public long getItemId(int i) {

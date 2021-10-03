@@ -10,24 +10,34 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 import am.threesmart.cowin.filemanager.AuthFileManager;
+import am.threesmart.cowin.user.UserInfo;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
 
+    public static UserInfo userInfo;
     private Button confirmButton;
     private Button maleButton;
     private Button femaleButton;
     private TextView chooseDiseasesTextView;
+    private TextView fullNameTextView;
+    private TextView ageTextView;
+    private String biologicalSex;
     boolean[] selectedDiseases;
+    Spinner spinnerForEthnicity;
+    String selected_val;
     ArrayList<Integer> diseasesList = new ArrayList<>();
     String[] diseasesArray = {
             "No",
@@ -42,27 +52,15 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
 
+        fullNameTextView = findViewById(R.id.full_name_questions);
+        ageTextView = findViewById(R.id.age_questions);
+
+
         //get the spinner from the xml.
-        Spinner spinnerForEthnicity = findViewById(R.id.spinner1);
+        spinnerForEthnicity = findViewById(R.id.spinner1);
         //create a list of items for the spinner.
         String[] ethnicities = new String[]{
-                "Ethnicity not stated",
-                "White British",
-                "White Irish",
-                "Other White background",
-                "White and Black Caribbean mixed",
-                "White and Black African mixed",
-                "White and Asian mixed",
-                "Other mixed or multiple ethnic background",
-                "Indian",
-                "Pakistani",
-                "Bangladeshi",
-                "Any other Asian background",
-                "Caribbean",
-                "Black African",
-                "Any other Black/African/Caribbean",
-                "Chinese",
-                "Other ethnic group including Arab"};
+                "Hispanic/Latino","American Indian / Alaska Native Non-Hispanic","Asian Non-Hispanic","Black Non-Hispanic","Native Hawaiian / Other Pacific Islander Non-Hispanic","White Non-Hispanic","Multiple/Other Non-Hispanic"};
 
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
@@ -162,6 +160,30 @@ public class QuestionAnswerActivity extends AppCompatActivity {
             }
         });
 
+        spinnerForEthnicity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+
+                if(spinnerForEthnicity.getSelectedItem() != null) {
+                    selected_val = spinnerForEthnicity.getSelectedItem().toString();
+                    Toast.makeText(getApplicationContext(), selected_val ,
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+
+
 
         maleButton = findViewById(R.id.button);
         femaleButton = findViewById(R.id.button2);
@@ -173,6 +195,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 maleButton.setTextColor(getResources().getColor(R.color.black));
                 femaleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_female_button));
                 femaleButton.setTextColor(getResources().getColor(R.color.white));
+                biologicalSex = "male";
 
             }
         });
@@ -183,7 +206,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                 femaleButton.setTextColor(getResources().getColor(R.color.black));
                 maleButton.setBackground(ContextCompat.getDrawable(QuestionAnswerActivity.this,R.drawable.ic_asset_male_button));
                 maleButton.setTextColor(getResources().getColor(R.color.white));
-
+                biologicalSex = "female";
             }
         });
 
@@ -225,6 +248,50 @@ public class QuestionAnswerActivity extends AppCompatActivity {
     }
 
     private boolean isAllRequiredFieldsEntered(){
-        return false;
+        String fullName;
+        short age;
+        String biologicalSexTemp = null;
+        String ethnicity;
+        ArrayList<String> chronicDiseases = new ArrayList();
+
+        if(fullNameTextView.getText().toString().equals(null) || fullNameTextView.getText().toString().equals("")){
+            return false;
+        }
+        else{
+            fullName = fullNameTextView.getText().toString();
+        }
+        if(ageTextView.getText().toString().equals(null) || ageTextView.getText().toString().equals("")){
+            return false;
+        }
+        else{
+            age = Short.valueOf(ageTextView.getText().toString());
+        }
+        if(Objects.equals(biologicalSex,null)){
+            return false;
+        }
+        else{
+            biologicalSexTemp = biologicalSex;
+        }
+        if(selected_val == null){
+            return false;
+        }
+        else{
+            ethnicity = selected_val;
+
+        }
+        if(diseasesList.size() == 0){
+            return false;
+        }
+        else{
+            for (int j = 0; j < diseasesList.size(); j++){
+                chronicDiseases.add(diseasesArray[diseasesList.get(j)]);
+            }
+        }
+
+
+        userInfo = new UserInfo(fullName,age,biologicalSexTemp,ethnicity,chronicDiseases);
+
+
+        return true;
     }
 }
