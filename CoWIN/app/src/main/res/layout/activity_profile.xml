@@ -5,14 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BlueBackground"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileActivity"><![CDATA[
+
+
+
+    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
+
+
+    ]]>
 
     <Button
         android:id="@+id/back_button"
         android:layout_width="40dp"
         android:layout_height="35dp"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/logout_button"
@@ -26,7 +36,6 @@
 
 
     ]]>
-
     <ImageView
         android:id="@+id/profile_image_view"
         android:layout_width="120dp"
@@ -45,7 +54,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/ic_asset_user_info_background"
         app:layout_constraintBottom_toTopOf="@+id/back_button"
         app:layout_constraintEnd_toEndOf="parent"
