@@ -43,7 +43,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/full_name_questions"
             android:layout_width="300dp"
             android:layout_height="55dp"
             android:layout_below="@+id/textView5"
@@ -78,7 +78,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/age_questions"
             android:layout_width="300dp"
             android:layout_height="55dp"
             android:layout_below="@+id/textView2"
