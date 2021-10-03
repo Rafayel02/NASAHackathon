@@ -10,4 +10,6 @@
     <color name="BlueBackground">#08214A</color>
     <color name="gray">#808080</color>
     <color name="loginSIERA">#c1e7f5</color>
+    <color name="lightGreen">#0EEF47</color>
+    <color name="lightPink">#FF065D</color>
 </resources>

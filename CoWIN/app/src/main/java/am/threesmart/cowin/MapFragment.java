@@ -20,8 +20,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-    private Button profileButton;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,15 +29,6 @@ public class MapFragment extends Fragment {
         //Initialize map fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
-
-        profileButton = view.findViewById(R.id.profile_button);
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //Async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
